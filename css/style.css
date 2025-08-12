@@ -1,0 +1,77 @@
+body {
+  background-color: #1a1a1a;
+  color: #e0e0e0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  line-height: 1.6;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+h1 {
+  color: #4dd0e1; /* A cyan color for headings */
+}
+
+/* --- Scrolling Header --- */
+
+/* The header bar itself */
+.scrolling-header {
+  position: fixed; /* Fixes it to the viewport */
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: #000000;
+  border-bottom: 1px solid #444444;
+  padding: 0.0rem 0;
+  overflow: hidden; /* Hides the text that goes off-screen */
+  white-space: nowrap; /* Prevents the text from wrapping to a new line */
+}
+
+/* The text that will scroll */
+.scrolling-text {
+  display: inline-block;
+  color: #e0e0e0;
+  animation: scroll-left 20s linear infinite; /* Applies our animation */
+}
+
+/* The animation keyframes */
+@keyframes scroll-left {
+  0% {
+    transform: translateX(0%); /* Starts at the beginning */
+  }
+  100% {
+    transform: translateX(-50%); /* Ends halfway through to create a seamless loop */
+  }
+}
+
+/* --- Audio Button --- */
+#audio-toggle-button {
+  /* Sizing and Shape */
+  width: 30px;
+  height: 30px;
+  border: 1px solid #444444;
+  background-color: #ffffff;
+  color: #000000;
+  font-size: 14px;
+  margin-left: 0.0rem;
+  padding: 0; /* Remove any default browser padding */
+
+  /* Layering: Bring button to the top */
+  z-index: 10;
+
+  /* Flexbox for perfect centering */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  /* Other styles */
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+/* --- Header Adjustment --- */
+/* Update the header to align the button and text */
+.scrolling-header {
+  display: flex; /* Use flexbox for alignment */
+  align-items: center; /* Vertically center items */
+}
