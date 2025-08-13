@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ title }}</title>
+  <link rel="stylesheet" href="/css/fonts.css">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <!-- Main business card content -->
+  <main>
+    {{ content | safe }}
+  </main>
+
+  <!-- The portal that will expand and contain the starfield -->
+  <div id="transition-portal">
+    <canvas id="starfield"></canvas>
+  </div>
+
+  <!-- The new overlay for the "Access Granted" message -->
+  <div id="unlock-overlay">
+    <div class="keyhole"></div>
+    <p class="access-text">ACCESS GRANTED</p>
+  </div>
+
+  <!-- Scripts -->
+  <script src="/js/starfield.js"></script>
+  <script src="/js/transition.js"></script>
+</body>
+</html>

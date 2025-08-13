@@ -8,6 +8,17 @@ body {
   padding: 2rem;
 }
 
+/* Main Content Container */
+main {
+  background-color: #000000; /* This creates the solid black panel */
+  max-width: 800px;
+  margin: 0 auto;
+  padding-top: 0.1rem;
+  padding-right: 2rem;
+  padding-bottom: 1.5rem;
+  padding-left: 2rem;
+}
+
 h1 {
   color: #4dd0e1; /* A cyan color for headings */
 }
@@ -74,4 +85,219 @@ h1 {
 .scrolling-header {
   display: flex; /* Use flexbox for alignment */
   align-items: center; /* Vertically center items */
+}
+
+/* --- Starfield Canvas --- */
+#starfield {
+  position: fixed; /* Fixes it to the viewport */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1; /* Crucial: Places the canvas BEHIND all other content */
+}
+
+/* --- Business Card Specific Styles --- */
+main {
+  max-width: 600px;
+  margin: 15vh auto;
+  padding: 3rem 2rem;
+  background-color: #ffffff;
+  color: #1a1a1a;
+  text-align: center;
+  border: 1px solid #ccc;
+  box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
+}
+
+main h1 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  letter-spacing: 0.1em;
+  color: #222;
+  margin-bottom: 0.5rem;
+}
+
+main em {
+  display: block;
+  font-style: italic;
+  color: #555;
+  margin-bottom: 1.5rem;
+  letter-spacing: 0.05em;
+}
+
+main h3 {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #333;
+  margin-top: 2rem;
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.1em;
+}
+
+.contact-link {
+  color: #007bff;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.contact-link:hover {
+  text-decoration: underline;
+}
+
+.enter-site-button {
+  display: inline-block;
+  background-color: #ffffff;
+  color: #000000;
+  border: 1px solid #444444;
+  padding: 0.5rem 1.5rem;
+  margin-top: 2rem;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.enter-site-button:hover {
+  background-color: #e0e0e0;
+}
+
+/* --- Transition Animations --- */
+.fade-out {
+  animation: fade-out-effect 1.5s forwards;
+}
+
+@keyframes fade-out-effect {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+.zoom-in {
+  animation: zoom-in-effect 1.5s forwards;
+}
+
+@keyframes zoom-in-effect {
+  from { transform: scale(1); }
+  to { transform: scale(3); }
+}
+
+/* --- Door Transition --- */
+
+/* The door itself, which holds the starfield */
+#transition-door {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 100; /* Place it on top of everything */
+  background-color: #000000;
+  /* Hide it by default by pushing it down */
+  transform: translateY(100%); 
+}
+
+/* This class will be added by JavaScript to open the door */
+.door-open {
+  animation: slide-up 1.5s forwards;
+}
+
+@keyframes slide-up {
+  from { transform: translateY(100%); }
+  to { transform: translateY(-100%); } /* Slides up and off the screen */
+}
+
+/* Make the starfield canvas fill the door */
+#transition-door #starfield {
+  z-index: 101; /* Ensure stars are inside the door */
+}
+
+/* Make the stars zoom in when the door is open */
+#transition-door.zoom-in #starfield {
+  animation: zoom-in-effect 1.5s forwards;
+}
+
+/* --- Portal Transition --- */
+
+/* The portal element itself */
+#transition-portal {
+  position: fixed; /* Allows precise positioning */
+  z-index: 100; /* Place it on top of other content */
+  background-color: #000;
+  overflow: hidden;
+  /* Hidden by default */
+  visibility: hidden;
+  opacity: 0;
+}
+
+/* The starfield inside the portal */
+#transition-portal #starfield {
+  opacity: 0; /* Stars are initially invisible */
+}
+
+/* --- Animation Trigger States --- */
+
+/* This class starts the whole animation sequence */
+body.is-transitioning #transition-portal {
+  visibility: visible;
+  opacity: 1;
+  /* Animate from the button's size to full screen */
+  animation: expand-portal 1.2s forwards cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+body.is-transitioning #transition-portal #starfield {
+  opacity: 1;
+  transition: opacity 0.5s ease-in;
+  /* Animate the star zoom effect */
+  animation: zoom-in-effect 2s forwards;
+}
+
+body.is-transitioning #enter-button {
+  /* Animate the button sliding up and fading out */
+  animation: slide-up-fade-out 0.8s forwards;
+}
+
+/* --- Keyframe Animations --- */
+
+@keyframes expand-portal {
+  to {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+@keyframes slide-up-fade-out {
+  to {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+}
+
+// Find the necessary elements
+const enterButton = document.getElementById('enter-button');
+const mainContent = document.querySelector('main');
+const unlockOverlay = document.getElementById('unlock-overlay');
+const transitionPortal = document.getElementById('transition-portal');
+
+if (enterButton) {
+  enterButton.addEventListener('click', (event) => {
+    event.preventDefault();
+
+    // --- Stage 1: Fade out card, show "Access Granted" ---
+    mainContent.style.opacity = '0';
+    unlockOverlay.classList.add('is-active');
+
+    // --- Stage 2: After a delay, expand the portal ---
+    setTimeout(() => {
+      unlockOverlay.style.opacity = '0'; // Fade out the unlock message
+      transitionPortal.classList.add('is-active'); // Activate the portal
+      animate(); // Start the hyperspace animation
+    }, 2000); // Wait 2 seconds for the unlock animation
+
+    // --- Stage 3: After another delay, navigate to the page ---
+    setTimeout(() => {
+      window.location.href = enterButton.href;
+    }, 4000); // Total transition time of 4 seconds
+  });
 }

@@ -1,23 +1,20 @@
 ---
-layout: layout.njk
-templateEngine: md
+layout: business-card.njk
+title: Denver Outzs
 ---
-# denver outzs
 
----
-### LOG
-*A collection of thoughts, reviews, and ideas.*
+# DENVER OUTZS
 
-This is where future content will live. The structure is simple, text-focused, and ready for expansion.
+*Filmmaker & Creator*
 
 ---
-### ARCHIVE
-*A collection of videos and media.*
 
-(Placeholder for video embeds)
+<a href="mailto:your.email@example.com" class="contact-link">EMAIL</a>
+<br>
+<a href="https://instagram.com/yourusername" target="_blank" rel="noopener noreferrer" class="contact-link">INSTAGRAM</a>
+
+<br><br>
 
 ---
-### CONNECT
-*A mailing list for future projects.*
 
-(Placeholder for a newsletter form)
+<a href="/art/" id="enter-button" class="enter-site-button">ENTER</a>
